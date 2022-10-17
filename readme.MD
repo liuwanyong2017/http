@@ -2,7 +2,7 @@
  * @Author: liuwanyong liuwanyong2018@gmail.com
  * @Date: 2022-10-14 23:15:35
  * @LastEditors: liuwanyong liuwanyong2018@gmail.com
- * @LastEditTime: 2022-10-17 20:51:00
+ * @LastEditTime: 2022-10-17 23:18:59
  * @FilePath: /http/readme.MD
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEh
 -->
@@ -163,3 +163,37 @@ http 是明文传输，不加密，无隐私安全。
 -  IP 层拿到 IP 包，拆解包得到 TCP 包，传给 TCP 层。
 -  TCP 层拆解包，，，，
 -  应用层拆解，，，
+
+## 发送请求的大致流程
+
+-  浏览器准备发送请求行
+-  先在浏览器缓存
+   里找有木有对应的请求记录和请求数据的缓存，有不过期，就终止请求了。
+-  没有缓存可以偷懒，
+   先要建立 TCP 连接。
+-  TCP 连接，先要 DNS 查询，定位到 IP 地址。DNS 也有缓存的，可以本地，可以网络路由器之间。
+-  拿到 IP 之后，开始三次握手，建立连接。
+-  然后发送请求行，再发送请求头，请求体。
+-  服务器发送 响应行，再发送响应头，体。
+-  然后看请求头或响应头上有木有 Connection:Keep-Alive，可以满足继续请求这个服务器的其他资源，避免多次 TCP 的开销。
+-  然后就是第四次握手，断开连接。
+-  重定向是再浏览器接收到响应头之后，拿到 301 状态码以及 location 字段之后，重新发送请求的。
+
+## 缓存机制
+
+DNS 缓存，为了很快拿到 IP 地址，不多说了。
+对于返回来的数据，如何做缓存？
+响应头中的 Catch-Control:Max-age=2000，意思是 2000 秒之后就需要重新请求资源了。2000 秒内，请求资源就会返回缓存里的数据。
+2000 秒后，在请求就会发冲去，请求头上带 If-None-Match:"4f80f-13c-3a1xb12a"。
+服务器收到请求 了，会根据 If-None-Match 的值做判断，是否数据更新了，没更新就返回 304.
+否则就返回最新数据。浏览器收到之后，都会把当前的数据的 age 设置为 0。
+
+### cookie 登录可以缓存
+
+浏览器发起请求，服务器返回请求，响应头有 Set
+Cookie:uid=23234234
+浏览器就会 set cookie。
+下次再发送到对应的
+host 端，请求头上自动添加 cookie 字段。
+服务器端收到
+请求之后，看到 cookie 字段就会自查有木有这个用户，这个用户的状态是否是登录态。
