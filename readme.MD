@@ -2,7 +2,7 @@
  * @Author: liuwanyong liuwanyong2018@gmail.com
  * @Date: 2022-10-14 23:15:35
  * @LastEditors: liuwanyong liuwanyong2018@gmail.com
- * @LastEditTime: 2022-10-15 15:37:30
+ * @LastEditTime: 2022-10-17 14:11:54
  * @FilePath: /http/readme.MD
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEh
 -->
@@ -88,3 +88,40 @@ TCP 引入了数据包排序机制，用来保证把乱序的数据包组合成�
 -  第四次握手，通知双方中断连接。
 
 保证了数据完整可靠，但是时间会很长，4 次握手，回复包收到，就多了一倍的包效果。
+
+### DNS/IP
+
+IP 确实可以确定对话双方的地址，实现沟通交流的可能。IP 本身也有自己的协议规范和值，目前是 v4 版，以后是 v6 版。用 4 个”."分割，如”192.168.0.1“。
+但是人对这种 IP 值是懵逼的，没有规律没有关联，无法便捷记忆。
+出现了 DNS，域名系统。
+给 IP 取个名字，靠这个名字来指代 IP 值。
+域名是主机名。域名跟 IP 是映射关系。
+人对域名很容易有感觉有记忆，有意识。人去拿 域名，域名通过域名解析，找到域名指代的 IP。
+然后人对 IP 指代的目的地服务器有了感觉了。
+域名解析也是靠本地的 DNS 服务器到上层 DNS 服务器一直递归到解析出来为止。
+
+### URI/URL
+
+通过 DNS、IP，可以到目标服务器了，但是服务器上 有很多的文件和资源数据，如何定位我想要的那个？
+URI，统一资源标识符，唯一标记网络上的资源。URI 的一个变种就是 URL，统一资源定位符。
+几乎一样，不做区分。
+
+<code>http://nginx.org/en/download.html</code>
+
+-  http 协议
+-  Nginx.org host ，DNS
+-  en/download.html 路径
+
+### HTTPS
+
+http 是明文传输，不加密，无隐私安全。
+加密了的 http 就是 HTTPS，多了一个加密协议 SSL/TLS。
+最新的密码学技术，
+对称加密，非对称加密，数字证书，数字签名等技术。创建一个安全的秘密通道传输数据。
+
+### 代理
+
+中转站，前面的 CDN 就是。可以代理用户端或者服务器端。
+可以做负载均衡，内容缓存，数据处理加密等，可以做安全防护，隐藏目标IP。
+
+
