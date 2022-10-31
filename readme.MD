@@ -2,7 +2,7 @@
  * @Author: liuwanyong liuwanyong2018@gmail.com
  * @Date: 2022-10-14 23:15:35
  * @LastEditors: liuwanyong liuwanyong2018@gmail.com
- * @LastEditTime: 2022-10-17 23:18:59
+ * @LastEditTime: 2022-10-31 23:49:45
  * @FilePath: /http/readme.MD
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEh
 -->
@@ -197,3 +197,14 @@ Cookie:uid=23234234
 host 端，请求头上自动添加 cookie 字段。
 服务器端收到
 请求之后，看到 cookie 字段就会自查有木有这个用户，这个用户的状态是否是登录态。
+
+## 域名系统
+
+域名只是为了对人友好，对搜索引擎友好的。
+是对 IP 地址的一层抽象。
+假如你在浏览器输入了域名内容的 URL，那会对域名进行域名解析。
+先看浏览器有木有缓存，再看本地电脑有木有缓存，再看路由器有木有缓存，
+然后就会进行 DNS 查询，一开始的流程是，从根域名服务器查
+顶级域名所在的服务器，然后到顶级域名服务器查询次级域名服务器，一级一级地查。
+类似于作用域，图书馆的检索系统，等等。直到最拿到 IP。
+DNS 除了缓存之外，还有其他的各个大厂自己的非权威的服务器 DNS 代理缓存 IP。
